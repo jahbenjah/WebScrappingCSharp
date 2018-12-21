@@ -24,7 +24,13 @@ namespace AppData
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Categoria>()
+                       .HasIndex(categoria => categoria.Url)
+                       .IsUnique();
+
+            modelBuilder.Entity<Libro>()
+                      .HasIndex(libro => libro.Url)
+                      .IsUnique();
         }
     }
 }
