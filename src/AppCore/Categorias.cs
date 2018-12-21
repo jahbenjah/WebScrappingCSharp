@@ -6,6 +6,7 @@ namespace AppCore
     {
         public int CategoriaId { get; set; }
         public string Nombre { get; set; }
+        public string Url { get; set; }
         public List<Libro> Libros { get; set; }
     }
 }
