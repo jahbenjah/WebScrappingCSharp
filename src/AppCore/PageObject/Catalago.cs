@@ -41,26 +41,15 @@ namespace AppCore.PageObject
             return categorias;
         }
 
-        public List<Categoria> ObtenerUrlLibros()
+        public List<string> ObtenerUrlLibros()
         {
-            List<Categoria> categorias = new List<Categoria>();
-            var links = _driver.FindElements(By.CssSelector("#default > div > div > div > aside > div.side_categories > ul > li > ul > li > a"));
-            foreach (var item in links)
+            List<string> urls = new List<string>();
+            var links = _driver.FindElements(By.XPath("//*[@id='default']/div/div/div/div/section/div/ol/li/article/h3/a"));
+            foreach (var link in links)
             {
-                if (item.Text.Length > 0)
-                {
-                    var url = item.GetAttribute("href");
-                    var inicio = url.LastIndexOf('_') + 1;
-                    var largo = url.LastIndexOf('/') - inicio;
-                    var category = new Categoria()
-                    {
-                        CategoriaId = Convert.ToInt32(url.Substring(inicio, largo)),
-                        Nombre = item.Text,
-                        Url = item.GetAttribute("href")
-                    };
-                }
+                urls.Add(link.GetAttribute("href"));
             }
-            return categorias;
+            return urls;
         }
 
         public IEnumerable<char> GetTitulo()

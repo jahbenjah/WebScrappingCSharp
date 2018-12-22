@@ -22,6 +22,15 @@ namespace AppConsole
                 driver.Navigate().GoToUrl(url);
                 Catalogo catalogo = new Catalogo(driver);
                 WriteLine(catalogo.GetTitulo());
+                foreach (var item in catalogo.ObtenerUrlLibros())
+                {
+                    driver.Navigate().GoToUrl(item);
+                    DetalleLibro detalleLibro = new DetalleLibro(driver);
+                    System.Console.WriteLine(detalleLibro.GetPrecio());
+                    System.Console.WriteLine(detalleLibro.GetTitulo());
+                    System.Console.WriteLine(detalleLibro.GetUrlImagen());
+                }
+               
                 catalogo.Siguiente();
                 catalogo.Anterior();
                 catalogo.ObtenerCategorias();
