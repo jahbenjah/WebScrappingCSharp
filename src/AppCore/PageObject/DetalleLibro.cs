@@ -5,7 +5,6 @@ namespace AppCore.PageObject
 {
     public class DetalleLibro
     {
-
         private IWebDriver _driver;
         public DetalleLibro(IWebDriver driver)
         {
@@ -30,7 +29,5 @@ namespace AppCore.PageObject
         {
             return _driver.FindElement(By.CssSelector("#product_gallery > div > div > div > img")).GetAttribute("src");
         }
-
-
     }
 }

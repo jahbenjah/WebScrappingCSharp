@@ -6,9 +6,6 @@ namespace AppCore.PageObject
 {
     public class Catalogo
     {
-        private readonly string Password = "pass";
-        private readonly string Inicia = "u_0_2";
-
         private IWebDriver _driver;
         public Catalogo(IWebDriver driver)
         {
@@ -53,7 +50,7 @@ namespace AppCore.PageObject
             return urls;
         }
 
-        public IEnumerable<char> GetTitulo()
+        public string GetTitulo()
         {
             return _driver.FindElement(By.TagName("title")).Text;
         }
