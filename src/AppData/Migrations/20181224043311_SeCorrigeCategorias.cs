@@ -2,25 +2,26 @@
 
 namespace AppData.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class SeCorrigeCategorias : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categoria",
+                name: "Categorias",
                 columns: table => new
                 {
                     CategoriaId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nombre = table.Column<string>(nullable: true)
+                    Nombre = table.Column<string>(nullable: true),
+                    Url = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categoria", x => x.CategoriaId);
+                    table.PrimaryKey("PK_Categorias", x => x.CategoriaId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Libro",
+                name: "Libros",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -33,28 +34,28 @@ namespace AppData.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Libro", x => x.Id);
+                    table.PrimaryKey("PK_Libros", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Libro_Categoria_CategoriaId",
+                        name: "FK_Libros_Categorias_CategoriaId",
                         column: x => x.CategoriaId,
-                        principalTable: "Categoria",
+                        principalTable: "Categorias",
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Libro_CategoriaId",
-                table: "Libro",
+                name: "IX_Libros_CategoriaId",
+                table: "Libros",
                 column: "CategoriaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Libro");
+                name: "Libros");
 
             migrationBuilder.DropTable(
-                name: "Categoria");
+                name: "Categorias");
         }
     }
 }

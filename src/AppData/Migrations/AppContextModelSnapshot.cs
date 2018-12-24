@@ -26,10 +26,7 @@ namespace AppData.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.HasIndex("Url")
-                        .IsUnique();
-
-                    b.ToTable("Categoria");
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("AppCore.Libro", b =>
@@ -51,10 +48,7 @@ namespace AppData.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("Url")
-                        .IsUnique();
-
-                    b.ToTable("Libro");
+                    b.ToTable("Libros");
                 });
 
             modelBuilder.Entity("AppCore.Libro", b =>

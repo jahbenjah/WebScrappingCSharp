@@ -36,6 +36,7 @@ namespace AppCore.PageObject
                         Nombre = item.Text,
                         Url = item.GetAttribute("href")
                     };
+                    categorias.Add(category);
                 }
             }
             return categorias;

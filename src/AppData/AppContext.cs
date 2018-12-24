@@ -7,7 +7,7 @@ namespace AppData
     {
         public DbSet<Libro> Libros { get; set; }
 
-        public DbSet<Libro> Categorias { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
 
         public AppContext()
         {
@@ -24,13 +24,7 @@ namespace AppData
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Categoria>()
-                       .HasIndex(categoria => categoria.Url)
-                       .IsUnique();
-
-            modelBuilder.Entity<Libro>()
-                      .HasIndex(libro => libro.Url)
-                      .IsUnique();
+            
         }
     }
 }

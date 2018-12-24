@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppData.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20181220222434_Inicial")]
-    partial class Inicial
+    [Migration("20181224043311_SeCorrigeCategorias")]
+    partial class SeCorrigeCategorias
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,11 @@ namespace AppData.Migrations
 
                     b.Property<string>("Nombre");
 
+                    b.Property<string>("Url");
+
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categoria");
+                    b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("AppCore.Libro", b =>
@@ -48,7 +50,7 @@ namespace AppData.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("Libro");
+                    b.ToTable("Libros");
                 });
 
             modelBuilder.Entity("AppCore.Libro", b =>

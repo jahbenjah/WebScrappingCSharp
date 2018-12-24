@@ -3,8 +3,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 using System.IO;
-using  static System.Console;
 using System.Linq;
+using static System.Console;
 
 namespace AppConsole
 {
@@ -14,26 +14,36 @@ namespace AppConsole
         {
             var driver = GetDriver();
             driver.Manage().Window.Maximize();
-           
+
             foreach (var url in GetCatalogoUrls().Take(1))
             {
 
                 WriteLine(url);
                 driver.Navigate().GoToUrl(url);
                 Catalogo catalogo = new Catalogo(driver);
-                WriteLine(catalogo.GetTitulo());
-                foreach (var item in catalogo.ObtenerUrlLibros())
+                //WriteLine(catalogo.GetTitulo());
+                //foreach (var item in catalogo.ObtenerUrlLibros())
+                //{
+                //    driver.Navigate().GoToUrl(item);
+                //    DetalleLibro detalleLibro = new DetalleLibro(driver);
+                //    System.Console.WriteLine(detalleLibro.GetPrecio());
+                //    System.Console.WriteLine(detalleLibro.GetTitulo());
+                //    System.Console.WriteLine(detalleLibro.GetUrlImagen());
+                //}
+
+                //catalogo.Siguiente();
+                //catalogo.Anterior();
+                var cate = catalogo.ObtenerCategorias();
+
+                using (var db = new AppData.AppContext())
                 {
-                    driver.Navigate().GoToUrl(item);
-                    DetalleLibro detalleLibro = new DetalleLibro(driver);
-                    System.Console.WriteLine(detalleLibro.GetPrecio());
-                    System.Console.WriteLine(detalleLibro.GetTitulo());
-                    System.Console.WriteLine(detalleLibro.GetUrlImagen());
+                    foreach (var cat in cate)
+                    {
+                        db.Categorias.Add(cat);
+                        db.SaveChanges();
+                    }
+
                 }
-               
-                catalogo.Siguiente();
-                catalogo.Anterior();
-                catalogo.ObtenerCategorias();
             }
             ReadLine();
         }
@@ -59,5 +69,27 @@ namespace AppConsole
             }
             return urls;
         }
+
+        public static void GuardarCategorias()
+        {
+            var driver = GetDriver();
+            driver.Manage().Window.Maximize();
+
+            foreach (var url in GetCatalogoUrls().Take(1))
+            {
+                driver.Navigate().GoToUrl(url);
+                Catalogo catalogo = new Catalogo(driver);
+                var cate = catalogo.ObtenerCategorias();
+                using (var db = new AppData.AppContext())
+                {
+                    foreach (var cat in cate)
+                    {
+                        db.Categorias.Add(cat);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
+
     }
 }
