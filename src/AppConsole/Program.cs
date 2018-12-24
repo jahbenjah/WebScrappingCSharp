@@ -12,40 +12,19 @@ namespace AppConsole
     {
         static void Main(string[] args)
         {
+            NavagarPorElCatalogo();
+            ReadLine();
+        }
+
+        public static void NavagarPorElCatalogo()
+        {
             var driver = GetDriver();
             driver.Manage().Window.Maximize();
 
-            foreach (var url in GetCatalogoUrls().Take(1))
+            foreach (var url in GetCatalogoUrls())
             {
-
-                WriteLine(url);
                 driver.Navigate().GoToUrl(url);
-                Catalogo catalogo = new Catalogo(driver);
-                //WriteLine(catalogo.GetTitulo());
-                //foreach (var item in catalogo.ObtenerUrlLibros())
-                //{
-                //    driver.Navigate().GoToUrl(item);
-                //    DetalleLibro detalleLibro = new DetalleLibro(driver);
-                //    System.Console.WriteLine(detalleLibro.GetPrecio());
-                //    System.Console.WriteLine(detalleLibro.GetTitulo());
-                //    System.Console.WriteLine(detalleLibro.GetUrlImagen());
-                //}
-
-                //catalogo.Siguiente();
-                //catalogo.Anterior();
-                var cate = catalogo.ObtenerCategorias();
-
-                using (var db = new AppData.AppContext())
-                {
-                    foreach (var cat in cate)
-                    {
-                        db.Categorias.Add(cat);
-                        db.SaveChanges();
-                    }
-
-                }
             }
-            ReadLine();
         }
 
         public static IWebDriver GetDriver()
