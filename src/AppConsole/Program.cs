@@ -12,7 +12,25 @@ namespace AppConsole
     {
         static void Main(string[] args)
         {
-            NavagarPorElCatalogo();
+            var driver = GetDriver();
+            driver.Manage().Window.Maximize();
+
+            foreach (var url in GetCatalogoUrls().Skip(1))
+            {
+                driver.Navigate().GoToUrl(url);
+                Catalogo catalogo = new Catalogo(driver);
+                var links = catalogo.ObtenerUrlLibros();
+                foreach (var link in links)
+                {
+                    driver.Navigate().GoToUrl(link);
+                    DetalleLibro detalleLibro = new DetalleLibro(driver);
+                    using (var db = new AppData.AppContext())
+                    {
+                        db.Libros.Add(detalleLibro.GetDetallesLibro());
+                        db.SaveChanges();
+                    }
+                }
+            }
             ReadLine();
         }
 
@@ -31,7 +49,7 @@ namespace AppConsole
         {
             var user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36";
             ChromeOptions options = new ChromeOptions();
-            //options.AddArgument("--headless");
+            options.AddArgument("--headless");
             options.AddArgument("--disable-gpu");
             options.AddArgument($"user_agent={user_agent}"); //Especifies user Agent
             options.AddArgument("--ignore-certificate-errors");

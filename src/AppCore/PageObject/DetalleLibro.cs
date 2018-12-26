@@ -29,5 +29,33 @@ namespace AppCore.PageObject
         {
             return _driver.FindElement(By.CssSelector("#product_gallery > div > div > div > img")).GetAttribute("src");
         }
+
+        public string GetCategory()
+        {
+
+            return _driver.FindElement(By.CssSelector("#default > div > div > ul > li:nth-child(3) > a")).Text;
+        }
+
+        public int GetCategoryId()
+        {
+            var categorylink = _driver.FindElement(By.CssSelector("#default > div > div > ul > li:nth-child(3) > a")).GetAttribute("href");
+            var inicio = categorylink.LastIndexOf('_') + 1;
+            var largo = categorylink.LastIndexOf('/') - inicio;
+            return Convert.ToInt32(categorylink.Substring(inicio, largo));
+        }
+        public Libro GetDetallesLibro()
+        {
+            Libro libro = new Libro()
+            {
+
+                CategoriaId = GetCategoryId(),
+                Precio = GetPrecio(),
+                Titulo = GetTitulo(),
+                UrlImage = GetUrlImagen(),
+                Url = _driver.Url
+            };
+            return libro;
+        }
+
     }
 }
