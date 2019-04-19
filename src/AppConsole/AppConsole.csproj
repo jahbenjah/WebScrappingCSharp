@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="2.45.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="73.0.3683.68" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppCore\AppCore.csproj" />

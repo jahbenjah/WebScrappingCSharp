@@ -14,7 +14,13 @@ namespace AppConsole
         {
             var driver = GetDriver();
             driver.Manage().Window.Maximize();
+            GuardarCategorias(driver);
+            ExtraerLibros(driver);
+            ReadLine();
+        }
 
+        private static void ExtraerLibros(IWebDriver driver)
+        {
             foreach (var url in GetCatalogoUrls().Skip(1))
             {
                 driver.Navigate().GoToUrl(url);
@@ -31,9 +37,12 @@ namespace AppConsole
                     }
                 }
             }
-            ReadLine();
         }
 
+        /// <summary>
+        /// Abre el navegador Chrome y visita cada una de las páginas del catalago de
+        /// http://books.toscrape.com/
+        /// </summary>
         public static void NavagarPorElCatalogo()
         {
             var driver = GetDriver();
@@ -44,19 +53,28 @@ namespace AppConsole
                 driver.Navigate().GoToUrl(url);
             }
         }
-
+        
+        /// <summary>
+        /// Configura el driver para Chrome
+        /// </summary>
+        /// <returns></returns>
         public static IWebDriver GetDriver()
         {
             var user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36";
             ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--headless");
+            //Descomenta esta linea para usar el mode HeadLess de Chrome
+            //options.AddArgument("--headless"); 
             options.AddArgument("--disable-gpu");
-            options.AddArgument($"user_agent={user_agent}"); //Especifies user Agent
+            options.AddArgument($"user_agent={user_agent}");
             options.AddArgument("--ignore-certificate-errors");
             IWebDriver driver = new ChromeDriver(Directory.GetCurrentDirectory(), options);
             return driver;
         }
 
+        /// <summary>
+        ///  Genera las url de las 50 paginas del catalogo de libros de http://books.toscrape.com/
+        /// </summary>
+        /// <returns></returns>
         public static List<string> GetCatalogoUrls()
         {
             List<string> urls = new List<string>();
@@ -67,11 +85,8 @@ namespace AppConsole
             return urls;
         }
 
-        public static void GuardarCategorias()
+        public static void GuardarCategorias(IWebDriver driver)
         {
-            var driver = GetDriver();
-            driver.Manage().Window.Maximize();
-
             foreach (var url in GetCatalogoUrls().Take(1))
             {
                 driver.Navigate().GoToUrl(url);
